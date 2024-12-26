@@ -38,7 +38,7 @@ go mod tidy
 ## Run
 
 ```bash
-go run main.go <pdf_path> <book_title> <delay_in_ms> <language>
+go run . <pdf_path> <book_title> <delay_in_ms> <language>
 
     <pdf_path>: Path to the PDF file you want to convert.
     <book_title>: Title of the book (will be used as a folder name).
@@ -55,28 +55,28 @@ Example:
 
 ## File Structure
 
-    ./tmp: Temporary directory for processing files.
-    ./tmp/<book_title>/txts: Contains the extracted text files from the PDF.
-    ./tmp/<book_title>/audios: Contains individual audio files for each sentence.
-    ./tmp/<book_title>/audios/final: Contains the concatenated audio files for each chapter.
+- ./tmp: Temporary directory for processing files.
+    - ./tmp/<book_title>/txts: Contains the extracted text files from the PDF.
+    - ./tmp/<book_title>/audios: Contains individual audio files for each sentence.
+    - ./tmp/<book_title>/audios/final: Contains the concatenated audio files for each chapter.
 
 ## How It Works
 
-    Initialize: The program checks the input arguments and sets up temporary directories.
-    Create Temporary PDF: The original PDF file is copied to a temporary location for processing.
-    Text Extraction: The program uses go-fitz to extract text from the PDF and save it into text files by chapters.
-    Audio Generation: For each chapter, the program sends text to a TTS API and receives audio files.
-    Concatenation: The individual sentence audio files are concatenated into full chapter audio files, with a silent gap (delay) between sentences.
+- Initialize: The program checks the input arguments and sets up temporary directories.
+- Create Temporary PDF: The original PDF file is copied to a temporary location for processing.
+- Text Extraction: The program uses go-fitz to extract text from the PDF and save it into text files by chapters.
+- Audio Generation: For each chapter, the program sends text to a TTS API and receives audio files.
+- Concatenation: The individual sentence audio files are concatenated into full chapter audio files, with a silent gap (delay) between sentences.
 
 ## Example Output
 
 After running the program, you'll find the generated audio files in the following directory:
 
-./tmp/<book_title>/audios/final
+- ./tmp/<book_title>/audios/final
 
 Each chapter will have a corresponding .wav file.
 
 ## Notes
 
-    The TTS service is expected to be running on http://127.0.0.1:7851/api/tts-generate. Make sure to have a TTS API service available for generating audio.
-    The program creates temporary directories (./tmp) for storing intermediate files. These can be cleaned up after the process completes.
+- The TTS service is expected to be running on http://127.0.0.1:7851/api/tts-generate. Make sure to have a TTS API service available for generating audio.
+- The program creates temporary directories (./tmp) for storing intermediate files. These can be cleaned up after the process completes.
